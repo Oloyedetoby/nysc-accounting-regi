@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Admin Dashboard <a href="/admin/export" class="btn btn-success float-right">Export to Excel</a></h2>
+        
+        <!-- Search Form -->
+        <form method="POST" action="/admin/search" class="mb-4">
+            <div class="input-group">
+                <input type="text" name="query" class="form-control" placeholder="Search by name, state code, or account...">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Submissions Table -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>S/N</th>
+                    <th>State Code</th>
+                    <th>Name</th>
+                    <th>Sex</th>
+                    <th>Bank Name</th>
+                    <th>Account Number</th>
+                    <th>Phone Number</th>
+                    <th>Call Up Number</th>
+                    <th>Name on Call-up Letter</th>
+                    <th>Account Name</th>
+                    <th>Submitted At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sub in submissions %}
+                <tr>
+                    <td>{{ sub.id }}</td>
+                    <td>{{ sub.state_code }}</td>
+                    <td>{{ sub.corps_member_name }}</td>
+                    <td>{{ sub.sex }}</td>
+                    <td>{{ sub.bank_name }}</td>
+                    <td>{{ sub.account_number }}</td>
+                    <td>{{ sub.phone_number }}</td>
+                    <td>{{ sub.callup_number }}</td>
+                    <td>{{ sub.callup_letter_name }}</td>
+                    <td>{{ sub.account_name }}</td>
+                    <td>{{ sub.submitted_at }}</td>
+                    <td>
+                        <a href="/admin/edit/{{ sub.id }}" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="/admin/delete/{{ sub.id }}" class="btn btn-sm btn-danger" onclick="return confirm('Delete this record?')">Delete</a>
+                        <a href="/admin/download/{{ sub.id }}" class="btn btn-sm btn-info">Download</a>
+                        <a href="/admin/print/{{ sub.id }}" class="btn btn-sm btn-secondary" target="_blank">Print</a>
+                        <a href="/admin/forward/{{ sub.id }}" class="btn btn-sm btn-primary">Forward</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/admin/logout" class="btn btn-danger">Logout</a>
+    </div>
+</body>
+</html>

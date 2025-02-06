@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Record</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    .container { max-width: 700px; margin-top: 50px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Edit Record</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <form method="POST" action="{{ url_for('edit', id=submission.id) }}">
+      <div class="form-group">
+        <label for="state_code">State Code</label>
+        <input type="text" class="form-control" name="state_code" id="state_code" value="{{ submission.state_code }}" required>
+      </div>
+      <div class="form-group">
+        <label for="corps_member_name">Name of Corps Member</label>
+        <input type="text" class="form-control" name="corps_member_name" id="corps_member_name" value="{{ submission.corps_member_name }}" required>
+      </div>
+      <div class="form-group">
+        <label for="sex">Sex</label>
+        <select class="form-control" name="sex" id="sex" required>
+          <option value="">Select Sex</option>
+          <option value="Male" {% if submission.sex == "Male" %}selected{% endif %}>Male</option>
+          <option value="Female" {% if submission.sex == "Female" %}selected{% endif %}>Female</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="bank_name">Bank Name</label>
+        <input type="text" class="form-control" name="bank_name" id="bank_name" value="{{ submission.bank_name }}" required>
+      </div>
+      <div class="form-group">
+        <label for="account_number">Account Number</label>
+        <input type="text" class="form-control" name="account_number" id="account_number" value="{{ submission.account_number }}" required>
+      </div>
+      <div class="form-group">
+        <label for="phone_number">Phone Number</label>
+        <input type="text" class="form-control" name="phone_number" id="phone_number" value="{{ submission.phone_number }}" required>
+      </div>
+      <div class="form-group">
+        <label for="callup_number">Call Up Number</label>
+        <input type="text" class="form-control" name="callup_number" id="callup_number" value="{{ submission.callup_number }}">
+      </div>
+      <div class="form-group">
+        <label for="callup_letter_name">Name on Call-up Letter</label>
+        <input type="text" class="form-control" name="callup_letter_name" id="callup_letter_name" value="{{ submission.callup_letter_name }}">
+      </div>
+      <div class="form-group">
+        <label for="account_name">Account Name</label>
+        <input type="text" class="form-control" name="account_name" id="account_name" value="{{ submission.account_name }}">
+      </div>
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+      <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+</body>
+</html>

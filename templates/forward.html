@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Forward Record</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .container { max-width: 600px; margin-top: 50px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Forward Record for {{ record.corps_member_name }}</h2>
+        <form method="POST" action="{{ url_for('forward_record', id=record.id) }}">
+            <div class="form-group">
+                <label for="recipient">Recipient Email</label>
+                <input type="email" class="form-control" name="recipient" id="recipient" placeholder="Enter recipient email" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Forward Record</button>
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>

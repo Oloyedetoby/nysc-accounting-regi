@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Print Record</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        @media print {
+            .no-print { display: none; }
+        }
+        .container { margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Record Details</h2>
+        <table class="table table-bordered">
+            <tr>
+                <th>ID</th>
+                <td>{{ record.id }}</td>
+            </tr>
+            <tr>
+                <th>State Code</th>
+                <td>{{ record.state_code }}</td>
+            </tr>
+            <tr>
+                <th>Name of Corps Member</th>
+                <td>{{ record.corps_member_name }}</td>
+            </tr>
+            <tr>
+                <th>Sex</th>
+                <td>{{ record.sex }}</td>
+            </tr>
+            <tr>
+                <th>Bank Name</th>
+                <td>{{ record.bank_name }}</td>
+            </tr>
+            <tr>
+                <th>Account Number</th>
+                <td>{{ record.account_number }}</td>
+            </tr>
+            <tr>
+                <th>Phone Number</th>
+                <td>{{ record.phone_number }}</td>
+            </tr>
+            <tr>
+                <th>Callup Number</th>
+                <td>{{ record.callup_number }}</td>
+            </tr>
+            <tr>
+                <th>Name on Call-up Letter</th>
+                <td>{{ record.callup_letter_name }}</td>
+            </tr>
+            <tr>
+                <th>Account Name</th>
+                <td>{{ record.account_name }}</td>
+            </tr>
+            <tr>
+                <th>Submitted At</th>
+                <td>{{ record.submitted_at }}</td>
+            </tr>
+        </table>
+        <button onclick="window.print()" class="btn btn-primary no-print">Print</button>
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary no-print">Back to Dashboard</a>
+    </div>
+</body>
+</html>

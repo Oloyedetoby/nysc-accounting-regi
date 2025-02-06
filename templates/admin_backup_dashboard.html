@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Backup: {{ backup_filename }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Backup Dashboard: {{ backup_filename }}</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>S/N</th>
+                    <th>State Code</th>
+                    <th>Name</th>
+                    <th>Sex</th>
+                    <th>Bank Name</th>
+                    <th>Account Number</th>
+                    <th>Phone Number</th>
+                    <th>Callup Number</th>
+                    <th>Name on Call-up Letter</th>
+                    <th>Account Name</th>
+                    <th>Submitted At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sub in submissions %}
+                <tr>
+                    <td>{{ sub.id }}</td>
+                    <td>{{ sub.state_code }}</td>
+                    <td>{{ sub.corps_member_name }}</td>
+                    <td>{{ sub.sex }}</td>
+                    <td>{{ sub.bank_name }}</td>
+                    <td>{{ sub.account_number }}</td>
+                    <td>{{ sub.phone_number }}</td>
+                    <td>{{ sub.callup_number }}</td>
+                    <td>{{ sub.callup_letter_name }}</td>
+                    <td>{{ sub.account_name }}</td>
+                    <td>{{ sub.submitted_at }}</td>
+                    <td>
+                        <a href="{{ url_for('download_backup_record', backup_filename=backup_filename, id=sub.id) }}" class="btn btn-sm btn-info">Download</a>
+                        <a href="{{ url_for('print_record', id=sub.id) }}" class="btn btn-sm btn-secondary" target="_blank">Print</a>
+                        <!-- Similarly add Edit, Delete, Forward links with appropriate backup routes -->
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ url_for('list_backups') }}" class="btn btn-secondary">Back to Backups</a>
+    </div>
+</body>
+</html>

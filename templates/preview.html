@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Preview Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .container { max-width: 700px; margin-top: 50px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="mb-4">Preview Your Registration</h2>
+        <table class="table table-bordered">
+            <tr>
+                <th>State Code</th>
+                <td>{{ data.state_code }}</td>
+            </tr>
+            <tr>
+                <th>Name of Corps Member</th>
+                <td>{{ data.corps_member_name }}</td>
+            </tr>
+            <tr>
+                <th>Sex</th>
+                <td>{{ data.sex }}</td>
+            </tr>
+            <tr>
+                <th>Bank Name</th>
+                <td>{{ data.bank_name }}</td>
+            </tr>
+            <tr>
+                <th>Account Number</th>
+                <td>{{ data.account_number }}</td>
+            </tr>
+            <tr>
+                <th>Phone Number</th>
+                <td>{{ data.phone_number }}</td>
+            </tr>
+            <tr>
+                <th>Call Up Number</th>
+                <td>{{ data.callup_number }}</td>
+            </tr>
+            <tr>
+                <th>Name on Call-up Letter</th>
+                <td>{{ data.callup_letter_name }}</td>
+            </tr>
+            <tr>
+                <th>Account Name</th>
+                <td>{{ data.account_name }}</td>
+            </tr>
+        </table>
+        <form method="POST" action="{{ url_for('submit') }}">
+            <!-- Hidden inputs to pass data along -->
+            <input type="hidden" name="state_code" value="{{ data.state_code }}">
+            <input type="hidden" name="corps_member_name" value="{{ data.corps_member_name }}">
+            <input type="hidden" name="sex" value="{{ data.sex }}">
+            <input type="hidden" name="bank_name" value="{{ data.bank_name }}">
+            <input type="hidden" name="account_number" value="{{ data.account_number }}">
+            <input type="hidden" name="phone_number" value="{{ data.phone_number }}">
+            <input type="hidden" name="callup_number" value="{{ data.callup_number }}">
+            <input type="hidden" name="callup_letter_name" value="{{ data.callup_letter_name }}">
+            <input type="hidden" name="account_name" value="{{ data.account_name }}">
+            <button type="submit" class="btn btn-success">Confirm and Submit</button>
+            <a href="{{ url_for('display_form') }}" class="btn btn-secondary">Edit</a>
+        </form>
+    </div>
+</body>
+</html>

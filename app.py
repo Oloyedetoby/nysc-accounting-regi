@@ -113,6 +113,11 @@ def backup_db():
 
 # ------------------ User Routes (Form, Preview, Submission) ------------------
 
+@app.route('/')
+def index():
+    # Render an index.html template (or return any response)
+    return render_template('index.html')
+
 @app.route('/form', methods=['GET'])
 def display_form():
     return render_template('form.html')

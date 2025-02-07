@@ -6,6 +6,7 @@ import sqlite3
 import qrcode
 import os
 import time
+import xlsxwriter
 import logging
 from datetime import datetime
 import pandas as pd
@@ -328,35 +329,42 @@ def edit(id):
 @login_required
 def export_to_excel():
     try:
-        # Query your database and get the DataFrame
+        logging.info("Starting Excel export...")
+        # Retrieve data from the database into a DataFrame.
         with closing(get_db()) as db:
             df = pd.read_sql_query('SELECT * FROM submissions', db)
-        
-        # Create an in-memory bytes buffer
+        logging.info(f"DataFrame retrieved with shape: {df.shape}")
+
+        # Create an in-memory bytes buffer.
         output = BytesIO()
         
-        # Write the DataFrame to an Excel file in memory using Pandas ExcelWriter
+        # Write the DataFrame to the buffer as an Excel file.
         with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
             df.to_excel(writer, index=False, sheet_name='Submissions')
+        logging.info("Excel file written to buffer.")
         
-        # Rewind the buffer to the beginning so it can be read from
+        # Rewind the buffer so that its contents can be read from the beginning.
         output.seek(0)
         
-        # Prepare a filename with the current date
+        # Optionally, log the size of the generated file.
+        file_data = output.getvalue()
+        logging.info(f"Excel file size: {len(file_data)} bytes")
+        
+        # Create a filename using the current date.
         filename = f"nysc_export_{datetime.now().strftime('%Y-%m-%d')}.xlsx"
         
-        # Return the file as a downloadable attachment
-        return send_file(
-            output,
-            download_name=filename,  # Flask 3.0.3 supports 'download_name'
-            as_attachment=True,
-            mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        )
+        # Build a response with the proper MIME type and headers.
+        response = Response(file_data,
+                            mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response.headers['Content-Disposition'] = f'attachment; filename={filename}'
+        
+        logging.info("Excel export completed successfully. Returning response.")
+        return response
     except Exception as e:
-        logging.error("Export failed: %s", str(e), exc_info=True)
+        logging.error("Excel export failed: %s", str(e), exc_info=True)
         flash(f'Export failed: {str(e)}', 'danger')
         return redirect(url_for('admin_dashboard'))
-    
+
 
 @app.route('/admin/backups')
 @login_required
